@@ -1,7 +1,7 @@
 # Makefile to build the SDL_mixer 2
 
 CDEFS   =  -DAROS_ALMOST_COMPATIBLE  -DHAVE_SNPRINTF -DHAVE_UNISTD_H -DHAVE_SETBUF -DHAVE_FORK  \
-					-DMUSIC_WAV -DMUSIC_OGG -DMUSIC_FLAC -DMUSIC_MOD_MIKMOD
+					-DMUSIC_WAV -DMUSIC_OGG -DMUSIC_FLAC -DMUSIC_MOD_MIKMOD -DMUSIC_MAD
 #-DUSE_INLINE_STDARG -D__MORPHOS_SHAREDLIBS -D_NO_INLINEPPC
 #-DMUSIC_MID_NATIVE -DMUSIC_MID_TIMIDITY
 #-DMUSIC_MP3_MAD  -DMUSIC_MOD_MODPLUG -DMUSIC_OPUS
@@ -28,25 +28,28 @@ LIBRARY = sdl2_mixer.library
 
 SOURCES = \
 	mixer.c \
-	dynamic_mp3.c \
-	dynamic_ogg.c \
-	dynamic_flac.c \
-	dynamic_mod.c \
 	effect_stereoreverse.c \
 	effects_internal.c \
 	effect_position.c \
-	wavestream.c \
+	load_aiff.c \
+	load_voc.c \
 	music.c \
-	music_ogg.c \
 	music_cmd.c \
 	music_flac.c \
-	music_mod.c \
+	music_fluidsynth.c \
 	music_mad.c \
-	load_flac.c \
-	load_mp3.c \
-	load_aiff.c \
-	load_ogg.c \
-	load_voc.c
+	music_mikmod.c \
+	music_modplug.c \
+	music_mpg123.c \
+	music_nativemidi.c \
+	music_opus.c \
+	music_ogg.c \
+	music_timidity.c \
+	music_wav.c \
+	timidity/common.c timidity/instrum.c timidity/mix.c timidity/output.c \
+	timidity/playmidi.c timidity/readmidi.c timidity/resample.c \
+	timidity/tables.c timidity/timidity.c 
+		 	
 
 CORESOURCES = MorphOS/*.c
 COREOBJECTS = $(shell echo $(CORESOURCES) | sed -e 's,\.c,\.o,g')
@@ -87,15 +90,15 @@ $(TARGET): $(OBJECTS)
 
 $(LIBRARY): $(TARGET) $(COREOBJECTS)
 	$(LINKING)
-	$(CC) -nostartfiles -mresident32 -Wl,-Map=sdl2_mixer.map $(COREOBJECTS) -o $@.db -L. -LSDL_mixer -L/usr/local/lib -lSDL2 -lm -lmikmod -logg -lvorbis
+	$(CC) -nostartfiles -mresident32 -Wl,-Map=sdl2_mixer.map $(COREOBJECTS) -o $@.db -L. -LSDL_mixer -L/usr/local/lib -lSDL2 -lm -lflac -lmikmod -lvorbis -logg -lmad
 	$(STRIPPING)
 	@ppc-morphos-strip -o $@ --remove-section=.comment $@.db
 
 playwave: sdklibs playwave.c
-	$(CC) -noixemul -O2 -Wall playwave.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG  -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL_mixer -lSDL
+	$(CC) -noixemul -O2 -Wall playwave.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG  -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL_mixer -lSDL -lflac -lmikmod -lvorbis -logg -lmad
 
 playmus: sdklibs playmus.c
-	$(CC) -noixemul -O2 -Wall playmus.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL_mixer -lSDL
+	$(CC) -noixemul -O2 -Wall playmus.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL_mixer -lSDL -lflac -lmikmod -lvorbis -logg -lmad
 
 
 

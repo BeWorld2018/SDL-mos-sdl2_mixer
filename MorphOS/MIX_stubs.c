@@ -1,7 +1,5 @@
 #include <stdarg.h>
-
 #define GENERATE_STUBS
-
 #include "MIX_stubs.h"
 
 /*********************************************************************/

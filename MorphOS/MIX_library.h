@@ -21,6 +21,8 @@
 #define __TEXTSEGMENT__
 #endif
 
+#include <SDL_mixer.h>
+
 struct CTDT
 {
 	int	(*fp)(void);
