@@ -7,7 +7,7 @@
 #include <exec/resident.h>
 #include <exec/system.h>
 #include <proto/exec.h>
-//#include <proto/vorbisfile.h>
+#include <proto/vorbisfile.h>
 
 #include "MIX_version.h"
 #include "MIX_library.h"
@@ -19,7 +19,7 @@ STATIC CONST TEXT libname[] = "sdl2_mixer.library";
 struct ExecBase   *SysBase  = NULL;
 struct DosLibrary *DOSBase  = NULL;
 struct Library    *SDL2Base = NULL;
-//struct Library    *VorbisFileBase = NULL;
+struct Library    *VorbisFileBase = NULL;
 
 /**********************************************************************
 	LIB_Reserved
@@ -157,11 +157,11 @@ static BPTR DeleteLib(struct SDL2MixerLibrary *LibBase, struct ExecBase *SysBase
 static void UserLibClose(struct SDL2MixerLibrary *LibBase, struct ExecBase *SysBase)
 {
 	CloseLibrary(SDL2Base);
-	//if (VorbisFileBase)
-    //	CloseLibrary(VorbisFileBase);
+	if (VorbisFileBase)
+    	CloseLibrary(VorbisFileBase);
 
 	SDL2Base = NULL;
-	//VorbisFileBase = NULL;
+	VorbisFileBase = NULL;
 
 }
 
@@ -256,8 +256,7 @@ struct Library *LIB_Open(void)
 	if (LibBase->Alloc == 0)
 	{
 		if (((SDL2Base = OpenLibrary("sdl2.library",  53)) != NULL)
-			//&& ((VorbisFileBase = OpenLibrary("vorbisfile.library",  2)) != NULL)
-		)
+			&& ((VorbisFileBase = OpenLibrary("vorbisfile.library",  2)) != NULL))
 		{
 			LibBase->Alloc = 1;
 		}
