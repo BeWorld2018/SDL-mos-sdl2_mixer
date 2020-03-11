@@ -20,6 +20,7 @@ struct ExecBase   *SysBase  = NULL;
 struct DosLibrary *DOSBase  = NULL;
 struct Library    *SDL2Base = NULL;
 struct Library    *VorbisFileBase = NULL;
+struct Library    *SDL2MixerBase = NULL;
 
 /**********************************************************************
 	LIB_Reserved
@@ -291,6 +292,8 @@ struct Library *LIB_Open(void)
 			}
 
 			childbase->DataSeg = (char *)mem + R13_OFFSET;
+
+			SDL2MixerBase = &childbase->Library;
 
 			if (AMIGA_Startup(childbase) == 0)
 			{

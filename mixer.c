@@ -431,11 +431,11 @@ int Mix_OpenAudioDevice(int frequency, Uint16 format, int nchannels, int chunksi
     desired.channels = nchannels;
     desired.samples = chunksize;
     desired.callback = mix_channels;
-//#if defined(__MORPHOS__)
- //   desired.userdata = SDL2MixerBase;
-//#else
+#if defined(__MORPHOS__)
+    desired.userdata = SDL2MixerBase;
+#else
     desired.userdata = NULL;
-//#endif
+#endif
 
     /* Accept nearly any audio format */
     if ((audio_device = SDL_OpenAudioDevice(device, 0, &desired, &mixer, allowed_changes)) == 0) {

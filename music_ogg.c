@@ -35,8 +35,9 @@
 #else
 #if defined(__MORPHOS__) && defined(USE_VORBISLIB)
 #include <proto/exec.h>
-#include <proto/vorbisfile.h>
-
+//#include <proto/vorbisfile.h>
+#include <libraries/vorbisfile.h>
+extern struct Library *VorbisFileBase;
 #else
 #include <vorbis/vorbisfile.h>
 #endif
