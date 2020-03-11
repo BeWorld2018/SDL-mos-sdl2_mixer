@@ -1,4 +1,4 @@
-# Makefile to build the SDL_mixer 2
+# Makefile to build the SDL2_mixer
 
 CDEFS   =  -DAROS_ALMOST_COMPATIBLE  -DHAVE_SNPRINTF -DHAVE_UNISTD_H -DHAVE_SETBUF -DHAVE_FORK  \
 					-DMUSIC_WAV -DMUSIC_OGG -DMUSIC_FLAC -DMUSIC_MOD_MIKMOD -DMUSIC_MAD
@@ -23,7 +23,7 @@ STRIPPING = @$(ECHE) "stripping $(BOLD)$@$(NRML)..."
 ARCHIVING = @$(ECHE) "archiving $(BOLD)$@$(NRML)..."
 HEADERING = @$(ECHE) "creating headers files $(BOLD)$@$(NRML)..."
 
-TARGET  = libSDL_mixer.a
+TARGET  = libSDL2_mixer.a
 LIBRARY = sdl2_mixer.library
 
 SOURCES = \
@@ -68,8 +68,8 @@ sdklibs:
 
 sdk: sdklibs
 	cp SDL_mixer.h /usr/local/include/SDL2
-	cp MorphOS/devenv/lib/libSDL_mixer.a /usr/local/lib/libSDL2_mixer.a
-	cp MorphOS/devenv/lib/libb32/libSDL_mixer.a /user/local/lib/libb32/libSDL2_mixer.a
+	cp MorphOS/devenv/lib/libSDL2_mixer.a /usr/local/lib/libSDL2_mixer.a
+	cp MorphOS/devenv/lib/libb32/libSDL2_mixer.a /user/local/lib/libb32/libSDL2_mixer.a
 
 install: $(LIBRARY)
 	@cp $(LIBRARY) LIBS:
@@ -90,15 +90,15 @@ $(TARGET): $(OBJECTS)
 
 $(LIBRARY): $(TARGET) $(COREOBJECTS)
 	$(LINKING)
-	$(CC) -nostartfiles -mresident32 -Wl,-Map=sdl2_mixer.map $(COREOBJECTS) -o $@.db -L. -LSDL_mixer -L/usr/local/lib -lSDL2 -lm -lflac -lmikmod -lvorbis -logg -lmad
+	$(CC) -nostartfiles -mresident32 -Wl,-Map=sdl2_mixer.map $(COREOBJECTS) -o $@.db -L. -lSDL2_mixer -L/usr/local/lib -lSDL2 -lm -lflac -lmikmod -lvorbis -logg -lmad
 	$(STRIPPING)
 	@ppc-morphos-strip -o $@ --remove-section=.comment $@.db
 
 playwave: sdklibs playwave.c
-	$(CC) -noixemul -O2 -Wall playwave.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG  -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL_mixer -lSDL -lflac -lmikmod -lvorbis -logg -lmad
+	$(CC) -noixemul -O2 -Wall playwave.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG  -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2_mixer -lSDL -lflac -lmikmod -lvorbis -logg -lmad
 
 playmus: sdklibs playmus.c
-	$(CC) -noixemul -O2 -Wall playmus.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL_mixer -lSDL -lflac -lmikmod -lvorbis -logg -lmad
+	$(CC) -noixemul -O2 -Wall playmus.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2_mixer -lSDL -lflac -lmikmod -lvorbis -logg -lmad
 
 
 
