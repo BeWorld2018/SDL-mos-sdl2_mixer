@@ -275,7 +275,7 @@ __end__restore_r13:
 #endif
 
 /* Mixing function */
-static void SDLCALL
+static void SAVEDS SDLCALL
 mix_channels(void *udata, Uint8 *stream, int len)
 {
     Uint8 *mix_input;
