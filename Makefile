@@ -1,15 +1,16 @@
 # Makefile to build the SDL_mixer 2
 
-CDEFS   =   -DHAVE_SNPRINTF -DHAVE_UNISTD_H -DHAVE_SETBUF -DHAVE_FORK  \
-					-DMUSIC_WAV -DMUSIC_OGG -DUSE_VORBISLIB -DMUSIC_MOD_MIKMOD -DMUSIC_MAD -DMUSIC_MP3_MAD -DMUSIC_FLAC -DMUSIC_OPUS
-# -D__MORPHOS_SHAREDLIBS 
+CDEFS   =   -D__MORPHOS_SHAREDLIBS  -DHAVE_SNPRINTF -DHAVE_UNISTD_H -DHAVE_SETBUF -DHAVE_FORK  \
+	    -DMUSIC_WAV -DMUSIC_OGG -DUSE_VORBISLIB 
+#  -DMUSIC_MOD_MIKMOD -DMUSIC_MAD -DMUSIC_MP3_MAD -DMUSIC_FLAC -DMUSIC_OPUS
 #-DMUSIC_MID_NATIVE -DMUSIC_MID_TIMIDITY
 # -DMUSIC_MOD_MODPLUG 
 CC      = ppc-morphos-gcc-4  -noixemul
-LIBS_EXT = -L/usr/local/lib  -lflac -lmikmod -lmad -lopusfile -lopus -lm
+LIBS_EXT = 
+#-L/usr/local/lib  -lflac -lmikmod -lmad -lopusfile -lopus -lm
 INCLUDE = -I../SDL-mos-sdl2/include -I. -I/usr/local/include -IMorphOS/sdk
-CFLAGS  =  -mcpu=750 -mtune=7450 -Wno-pointer-sign -fno-strict-aliasing -O2 -Wall -ffast-math $(INCLUDE)  $(CDEFS)
-# -mresident32
+CFLAGS  =  -mresident32 -mcpu=750 -mtune=7450 -Wno-pointer-sign -fno-strict-aliasing -O0 -Wall -ffast-math $(INCLUDE)  $(CDEFS)
+# 
 
 AR      = ar
 RANLIB  = ranlib
@@ -82,7 +83,7 @@ install-iso: $(LIBRARY)
 
 MorphOS/MIX_library.o: MorphOS/MIX_library.c MorphOS/MIX_library.h MorphOS/MIX_stubs.h
 	$(COMPILING)
-	$(CC) -mcpu=750 -O2 $(INCLUDE) -Wall -fno-strict-aliasing -DAROS_ALMOST_COMPATIBLE -o $@ -c $*.c
+	$(CC) -mcpu=750 -O0 $(INCLUDE) -Wall -fno-strict-aliasing -DAROS_ALMOST_COMPATIBLE -o $@ -c $*.c
 
 $(TARGET): $(OBJECTS)
 	$(ARCHIVING)
@@ -91,16 +92,16 @@ $(TARGET): $(OBJECTS)
 
 $(LIBRARY): $(TARGET) $(COREOBJECTS)
 	$(LINKING)
-	$(CC) -nostartfiles -mresident32 -Wl,-Map=sdl2_mixer.map $(COREOBJECTS) -o $@.db -L. -lSDL2_mixer -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL -lm $(LIBS_EXT)
+	$(CC) -nostartfiles -mresident32 -Wl,-Map=sdl2_mixer.map $(COREOBJECTS) -o $@.db -L. -lSDL2_mixer -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2 -lm $(LIBS_EXT)
 	#-lmad -logg -lvorbis -lmikmod -lflac
 	$(STRIPPING)
 	@ppc-morphos-strip -o $@ --remove-section=.comment $@.db
 
 playwave: sdklibs playwave.c
-	$(CC) -noixemul -O2 -Wall playwave.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG  -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2_mixer -lSDL $(LIBS_EXT)
+	$(CC) -noixemul -O0 -Wall playwave.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG  -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2_mixer -lSDL2 $(LIBS_EXT)
 
 playmus: sdklibs playmus.c
-	$(CC) -noixemul -O2 -Wall playmus.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2_mixer -lSDL  $(LIBS_EXT)
+	$(CC) -noixemul -O0 -Wall playmus.c -o $@ -I../SDL-mos-sdl2/include -DUSE_INLINE_STDARG -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2_mixer -lSDL2  $(LIBS_EXT)
 
 clean:
 	rm -f $(LIBRARY) $(TARGET) $(OBJECTS) $(COREOBJECTS) *.db *.s
