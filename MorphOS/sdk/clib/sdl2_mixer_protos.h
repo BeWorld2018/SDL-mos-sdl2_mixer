@@ -5,16 +5,17 @@
 #include <SDL.h>
 #endif
 
-#include <SDL_mixer.h>
+//#include <SDL_mixer.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 	
-const SDL_version * Mix_Linked_Version(void);
+//const SDL_version * Mix_Linked_Version(void);
 int  Mix_Init(int flags);
 void Mix_Quit(void);
 int Mix_OpenAudio(int frequency, Uint16 format, int channels, int chunksize);
+int Mix_OpenAudioDevice(int frequency, Uint16 format, int channels, int chunksize, const char* device, int allowed_changes);
 int Mix_AllocateChannels(int numchans);
 int Mix_QuerySpec(int *frequency,Uint16 *format,int *channels);
 Mix_Chunk * Mix_LoadWAV_RW(SDL_RWops *src, int freesrc);
@@ -25,10 +26,14 @@ Mix_Chunk * Mix_QuickLoad_WAV(Uint8 *mem);
 Mix_Chunk * Mix_QuickLoad_RAW(Uint8 *mem, Uint32 len);
 void Mix_FreeChunk(Mix_Chunk *chunk);
 void Mix_FreeMusic(Mix_Music *music);
+	
 int Mix_GetNumChunkDecoders(void);
 const char * Mix_GetChunkDecoder(int index);
+SDL_bool Mix_HasChunkDecoder(const char *name);
 int Mix_GetNumMusicDecoders(void);
 const char * Mix_GetMusicDecoder(int index);
+//SDL_bool Mix_HasMusicDecoder(const char *name);
+
 Mix_MusicType Mix_GetMusicType(const Mix_Music *music);
 void Mix_SetPostMix(void (*mix_func)(void *udata, Uint8 *stream, int len), void *arg);
 void Mix_HookMusic(void (*mix_func)(void *udata, Uint8 *stream, int len), void *arg);
@@ -81,6 +86,8 @@ int Mix_SetMusicCMD(const char *command);
 int Mix_SetSynchroValue(int value);
 int Mix_GetSynchroValue(void);
 int Mix_SetSoundFonts(const char *paths);
+const char* Mix_GetSoundFonts(void);
+int Mix_EachSoundFont(int (*function)(const char*, void*), void *data);
 Mix_Chunk * Mix_GetChunk(int channel);
 void Mix_CloseAudio(void);
 
