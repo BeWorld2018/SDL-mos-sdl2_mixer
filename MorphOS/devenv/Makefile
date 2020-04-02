@@ -1,6 +1,6 @@
 # Makefile to build the SDL_mixer version 2
 
-CC      = ppc-morphos-gcc-4 -noixemul 
+CC      = ppc-morphos-gcc-9 -noixemul 
 #INCLUDE = -I../../../../include -I../sdk
 CFLAGS  =  -mcpu=750 -mtune=7450 -O2 $(INCLUDE) -Wall -Wno-pointer-sign -fno-strict-aliasing
 AR	= ar
