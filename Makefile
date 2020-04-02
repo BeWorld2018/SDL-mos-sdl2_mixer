@@ -1,13 +1,13 @@
 # Makefile to build the SDL_mixer 2
 
 CDEFS   =   -D__MORPHOS_SHAREDLIBS  -DHAVE_SNPRINTF -DHAVE_UNISTD_H -DHAVE_SETBUF -DHAVE_FORK  \
-	    -DMUSIC_WAV -DMUSIC_OGG -DUSE_VORBISLIB 
-#  -DMUSIC_MOD_MIKMOD -DMUSIC_MAD -DMUSIC_MP3_MAD -DMUSIC_FLAC -DMUSIC_OPUS
+	    -DMUSIC_WAV -DMUSIC_OGG -DUSE_VORBISLIB -DMUSIC_MOD_MIKMOD -DMUSIC_MOD_MODPLUG
+#   -DMUSIC_MAD -DMUSIC_MP3_MAD -DMUSIC_FLAC -DMUSIC_OPUS
 #-DMUSIC_MID_NATIVE -DMUSIC_MID_TIMIDITY
-# -DMUSIC_MOD_MODPLUG 
+#  
 CC      = ppc-morphos-gcc-4  -noixemul
-LIBS_EXT = 
-#-L/usr/local/lib  -lflac -lmikmod -lmad -lopusfile -lopus -lm
+LIBS_EXT = -L/usr/local/lib -lmikmod -modplug
+#  -lflac -lmad -lopusfile -lopus -lm
 INCLUDE = -I../SDL-mos-sdl2/include -I. -I/usr/local/include -IMorphOS/sdk
 CFLAGS  =  -mresident32 -mcpu=750 -mtune=7450 -Wno-pointer-sign -fno-strict-aliasing -O0 -Wall -ffast-math $(INCLUDE)  $(CDEFS)
 # 
@@ -76,10 +76,6 @@ sdk: sdklibs
 install: $(LIBRARY)
 	@cp $(LIBRARY) LIBS:
 	-flushlib $(LIBRARY)
-
-install-iso: $(LIBRARY)
-	mkdir -p $(ISOPATH)MorphOS/Libs/
-	@cp $(LIBRARY) $(ISOPATH)MorphOS/Libs/
 
 MorphOS/MIX_library.o: MorphOS/MIX_library.c MorphOS/MIX_library.h MorphOS/MIX_stubs.h
 	$(COMPILING)
