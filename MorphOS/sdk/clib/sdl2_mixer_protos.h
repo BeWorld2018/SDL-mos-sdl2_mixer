@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 	
-//const SDL_version * Mix_Linked_Version(void);
+const SDL_version * Mix_Linked_Version(void);
 int  Mix_Init(int flags);
 void Mix_Quit(void);
 int Mix_OpenAudio(int frequency, Uint16 format, int channels, int chunksize);

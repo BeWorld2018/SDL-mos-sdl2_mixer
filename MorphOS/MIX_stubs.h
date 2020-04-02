@@ -29,7 +29,6 @@
 #define STUB(name) extern int LIB_##name();
 #endif
 
-//	STUB(Mix_Linked_Version)
 	STUB(Mix_Init)
 	STUB(Mix_Quit)
 	STUB(Mix_OpenAudio)
@@ -49,7 +48,6 @@
 	STUB(Mix_HasChunkDecoder)
 	STUB(Mix_GetNumMusicDecoders)
 	STUB(Mix_GetMusicDecoder)
-	//STUB(Mix_HasMusicDecoder)
 	STUB(Mix_GetMusicType)
 	STUB(Mix_SetPostMix)
 	STUB(Mix_HookMusic)
@@ -62,7 +60,6 @@
 	STUB(Mix_SetPanning)
 	STUB(Mix_SetPosition)
 	STUB(Mix_SetDistance)
-	//STUB(Mix_SetReverb)
 	STUB(Mix_SetReverseStereo)
 	STUB(Mix_ReserveChannels)
 	STUB(Mix_GroupChannel)
@@ -106,3 +103,4 @@
 	STUB(Mix_EachSoundFont)
 	STUB(Mix_GetChunk)
 	STUB(Mix_CloseAudio)
+	STUB(Mix_Linked_Version)
