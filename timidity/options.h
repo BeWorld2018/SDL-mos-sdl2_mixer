@@ -72,11 +72,19 @@
 /* You could specify a complete path, e.g. "/etc/timidity.cfg", and
    then specify the library directory in the configuration file. */
 #define CONFIG_FILE	"timidity.cfg"
+#ifdef __MORPHOS__
+#define CONFIG_FILE_ETC "LIBS:timidity.cfg"
+#else
 #define CONFIG_FILE_ETC "/etc/timidity.cfg"
+#endif
 #define CONFIG_FILE_ETC_TIMIDITY_FREEPATS "/etc/timidity/freepats.cfg"
 
 #if defined(__WIN32__) || defined(__OS2__)
 #define DEFAULT_PATH	"C:\\TIMIDITY"
+#elifdef __MORPHOS__
+#define DEFAULT_PATH	"LIBS:timidity"
+#define DEFAULT_PATH1	"timidity"
+#define DEFAULT_PATH2	""
 #else
 #define DEFAULT_PATH	"/etc/timidity"
 #define DEFAULT_PATH1	"/usr/share/timidity"
