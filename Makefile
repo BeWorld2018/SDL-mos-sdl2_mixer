@@ -5,7 +5,7 @@ CDEFS   =   -D__MORPHOS_SHAREDLIBS  -DHAVE_SNPRINTF -DHAVE_UNISTD_H -DHAVE_SETBU
 #   -DMUSIC_MAD -DMUSIC_MP3_MAD -DMUSIC_OPUS -DMUSIC_MP3_MPG123
 
 CC      = ppc-morphos-gcc-9 -noixemul
-LIBS_EXT = -L/usr/local/lib -lmikmod -modplug -lflac 
+LIBS_EXT = -L/usr/local/lib -lmikmod -lmodplug -lflac 
 #  -lmad -lopusfile -lopus -lm
 INCLUDE = -I../SDL-mos-sdl2/include -I. -I/usr/local/include -IMorphOS/sdk
 CFLAGS  =  -mresident32 -mcpu=750 -mtune=7450 -Wno-pointer-sign -fno-strict-aliasing -Wall -ffast-math $(INCLUDE)  $(CDEFS)
