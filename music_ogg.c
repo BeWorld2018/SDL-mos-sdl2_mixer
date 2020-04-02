@@ -109,6 +109,9 @@ static int OGG_Load(void)
 		vorbis.ov_pcm_total = *(void**)((long)(VorbisFileBase) - 94);
 		vorbis.ov_read = *(void**)((long)(VorbisFileBase) - 166);
 		vorbis.ov_time_seek = *(void**)((long)(VorbisFileBase) - 604);
+	    vorbis.ov_comment = *(void**)((long)(VorbisFileBase) - 160);
+	    vorbis.ov_pcm_seek = *(void**)((long)(VorbisFileBase) - 118);
+	    vorbis.ov_pcm_tell = *(void**)((long)(VorbisFileBase) - 142);
 		
 		#else
         FUNCTION_LOADER(ov_clear, int (*)(OggVorbis_File *))
