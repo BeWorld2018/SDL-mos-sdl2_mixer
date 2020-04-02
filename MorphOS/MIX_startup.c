@@ -1,6 +1,11 @@
+#include <proto/exec.h>
+
 #include "MIX_library.h"
 
 /*********************************************************************/
+
+extern struct Library    *SDL2Base;
+extern struct Library    *SDL2MixerBase;
 
 int ThisRequiresConstructorHandling = 0;
 
@@ -26,6 +31,11 @@ APTR libnix_mempool;
 int SAVEDS AMIGA_Startup(struct SDL2MixerLibrary *LibBase)
 {
 	struct CTDT *ctdt = LibBase->ctdtlist, *last_ctdt = LibBase->last_ctdt;
+
+	SDL2MixerBase = &LibBase->Library;
+
+	if ((SDL2Base = OpenLibrary("sdl2.library", 53)) == NULL)
+		return 0;
 
 	// Run constructors
 	while (ctdt < last_ctdt)
@@ -58,6 +68,12 @@ VOID SAVEDS AMIGA_Cleanup(struct SDL2MixerLibrary *LibBase)
 		}
 
 		ctdt++;
+	}
+
+	if (SDL2Base)
+	{
+		CloseLibrary(SDL2Base);
+		SDL2Base = NULL;
 	}
 }
 

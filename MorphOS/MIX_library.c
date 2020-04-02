@@ -157,11 +157,11 @@ static BPTR DeleteLib(struct SDL2MixerLibrary *LibBase, struct ExecBase *SysBase
 
 static void UserLibClose(struct SDL2MixerLibrary *LibBase, struct ExecBase *SysBase)
 {
-	CloseLibrary(SDL2Base);
+	//CloseLibrary(SDL2Base);
 	if (VorbisFileBase)
     	CloseLibrary(VorbisFileBase);
 
-	SDL2Base = NULL;
+	//SDL2Base = NULL;
 	VorbisFileBase = NULL;
 
 }
@@ -256,8 +256,8 @@ struct Library *LIB_Open(void)
 
 	if (LibBase->Alloc == 0)
 	{
-		if (((SDL2Base = OpenLibrary("sdl2.library",  53)) != NULL)
-			&& ((VorbisFileBase = OpenLibrary("vorbisfile.library",  2)) != NULL))
+		if (/*((SDL2Base = OpenLibrary("sdl2.library",  53)) != NULL)
+			&&*/ ((VorbisFileBase = OpenLibrary("vorbisfile.library",  2)) != NULL))
 		{
 			LibBase->Alloc = 1;
 		}
@@ -293,7 +293,7 @@ struct Library *LIB_Open(void)
 
 			childbase->DataSeg = (char *)mem + R13_OFFSET;
 
-			SDL2MixerBase = &childbase->Library;
+			//SDL2MixerBase = &childbase->Library;
 
 			if (AMIGA_Startup(childbase) == 0)
 			{
