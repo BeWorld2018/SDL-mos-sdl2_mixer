@@ -1,11 +1,11 @@
 # Makefile to build the SDL_mixer 2
 
 CDEFS   =   -D__MORPHOS_SHAREDLIBS  -DHAVE_SNPRINTF -DHAVE_UNISTD_H -DHAVE_SETBUF -DHAVE_FORK  \
-	    -DMUSIC_WAV -DMUSIC_OGG -DUSE_VORBISLIB -DMUSIC_MOD_MIKMOD -DMUSIC_MOD_MODPLUG -DMUSIC_MID_TIMIDITY -DMUSIC_FLAC
-#   -DMUSIC_MAD -DMUSIC_MP3_MAD -DMUSIC_OPUS -DMUSIC_MP3_MPG123
+	    -DMUSIC_WAV -DMUSIC_OGG -DUSE_VORBISLIB -DMUSIC_MOD_MIKMOD -DMUSIC_MOD_MODPLUG -DMUSIC_MID_TIMIDITY -DMUSIC_FLAC -DMUSIC_MP3_MPG123
+#   -DMUSIC_MAD -DMUSIC_MP3_MAD -DMUSIC_OPUS 
 
 CC      = ppc-morphos-gcc-9 -noixemul
-LIBS_EXT = -L/usr/local/lib -lmikmod -lmodplug -lflac 
+LIBS_EXT = -L/usr/local/lib -lmikmod -lmodplug -lflac -lmpg123
 
 INCLUDE = -I../SDL-mos-sdl2/include -I. -I/usr/local/include -IMorphOS/sdk
 CFLAGS  =  -mresident32 -O2 -mcpu=750 -mtune=7450 -Wno-pointer-sign -fno-strict-aliasing -Wall -ffast-math $(INCLUDE)  $(CDEFS)
