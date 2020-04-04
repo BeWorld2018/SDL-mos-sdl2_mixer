@@ -71,25 +71,29 @@
 
 /* You could specify a complete path, e.g. "/etc/timidity.cfg", and
    then specify the library directory in the configuration file. */
-#define CONFIG_FILE	"timidity.cfg"
 #ifdef __MORPHOS__
-#define CONFIG_FILE_ETC "LIBS:timidity.cfg"
+#define CONFIG_FILE "LIBS:timidity/timidity.cfg"
+#define CONFIG_FILE_ETC "PROGDIR:timidity.cfg"
+#define CONFIG_FILE_ETC_TIMIDITY_FREEPATS "LIBS:timidity/freepats.cfg"
 #else
+#define CONFIG_FILE	"timidity.cfg"
 #define CONFIG_FILE_ETC "/etc/timidity.cfg"
-#endif
 #define CONFIG_FILE_ETC_TIMIDITY_FREEPATS "/etc/timidity/freepats.cfg"
+#endif
+#endif
 
+#ifdef __MORPHOS__
+#define DEFAULT_PATH "LIBS:timidity"
+#define DEFAULT_PATH "PROGDIR:timidity"
+#else
 #if defined(__WIN32__) || defined(__OS2__)
 #define DEFAULT_PATH	"C:\\TIMIDITY"
-#elifdef __MORPHOS__
-#define DEFAULT_PATH	"LIBS:timidity"
-#define DEFAULT_PATH1	"timidity"
-#define DEFAULT_PATH2	""
 #else
 #define DEFAULT_PATH	"/etc/timidity"
 #define DEFAULT_PATH1	"/usr/share/timidity"
 #define DEFAULT_PATH2	"/usr/local/share/timidity"
 #define DEFAULT_PATH3	"/usr/local/lib/timidity"
+#endif
 #endif
 
 /* These affect general volume */
