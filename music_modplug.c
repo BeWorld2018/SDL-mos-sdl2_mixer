@@ -28,12 +28,7 @@
 #ifdef MODPLUG_HEADER
 #include MODPLUG_HEADER
 #else
-#ifdef __MORPHOS__
-#else
-#define _NO_PPCINLINE
 #include <libmodplug/modplug.h>
-#undef _NO_PPCINLINE
-#endif
 #endif
 
 typedef struct {
