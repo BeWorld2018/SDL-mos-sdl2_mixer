@@ -80,11 +80,10 @@
 #define CONFIG_FILE_ETC "/etc/timidity.cfg"
 #define CONFIG_FILE_ETC_TIMIDITY_FREEPATS "/etc/timidity/freepats.cfg"
 #endif
-#endif
 
 #ifdef __MORPHOS__
 #define DEFAULT_PATH "LIBS:timidity"
-#define DEFAULT_PATH "PROGDIR:timidity"
+#define DEFAULT_PATH1 "PROGDIR:timidity"
 #else
 #if defined(__WIN32__) || defined(__OS2__)
 #define DEFAULT_PATH	"C:\\TIMIDITY"
