@@ -4,7 +4,7 @@ CDEFS   =   -D__MORPHOS_SHAREDLIBS  -DHAVE_SNPRINTF -DHAVE_UNISTD_H -DHAVE_SETBU
 	    -DMUSIC_WAV -DMUSIC_OGG -DUSE_VORBISLIB -DMUSIC_MOD_MODPLUG -DMUSIC_MID_TIMIDITY -DMUSIC_FLAC -DMUSIC_MP3_MPG123
 
 CC      = ppc-morphos-gcc-9 -noixemul
-LIBS_EXT = -L/usr/local/lib -lmikmod -lmodplug -lflac -lmpg123
+LIBS_EXT = -L/usr/local/lib -lmodplug -lflac -lmpg123
 
 INCLUDE = -I../SDL-mos-sdl2/include -I. -I/usr/local/include -IMorphOS/sdk
 CFLAGS  =  -mresident32 -O2 -mcpu=750 -mtune=7450 -Wno-pointer-sign -fno-strict-aliasing -Wall -ffast-math $(INCLUDE)  $(CDEFS)
@@ -58,7 +58,7 @@ all: $(LIBRARY) sdklibs
 
 headers:
 	$(HEADERING)
-	@cvinclude.pl --fd=MorphOS/sdk/fd/sdl2_mixer_lib.fd --clib=MorphOS/sdk/clib/sdl2_mixer_protos.h --proto=MorphOS/sdk/proto/sdl2_mixer.h --verbose
+	@cvinclude.pl --fd=MorphOS/sdk/fd/sdl2_mixer_lib.fd --clib=MorphOS/sdk/clib/sdl2_mixer_protos.h --proto=MorphOS/sdk/proto/sdl2_mixer.h
 	@cvinclude.pl --fd=MorphOS/sdk/fd/sdl2_mixer_lib.fd --clib=MorphOS/sdk/clib/sdl2_mixer_protos.h --inline=MorphOS/sdk/ppcinline/sdl2_mixer.h
 
 sdklibs:
