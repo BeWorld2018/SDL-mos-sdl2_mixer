@@ -391,7 +391,7 @@ void open_music(const SDL_AudioSpec *spec)
 
     /* Calculate the number of ms for each callback */
 	#ifdef __MORPHOS__
-	    ms_per_step = (int)((spec->samples * 1000) / spec->freq);
+	    ms_per_step = (int)(((Sint64)spec->samples * 1000) / spec->freq);
 	#else
     	ms_per_step = (int) (((float)spec->samples * 1000.0) / spec->freq);
 	#endif
