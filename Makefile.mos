@@ -78,6 +78,10 @@ install: $(LIBRARY)
 MorphOS/MIX_library.o: MorphOS/MIX_library.c MorphOS/MIX_library.h MorphOS/MIX_stubs.h
 	$(COMPILING)
 	$(CC) -mcpu=750 $(INCLUDE) -Wall -fno-strict-aliasing -D__AMIGADATE__=\"$(AMIGADATE)\" -DAROS_ALMOST_COMPATIBLE -o $@ -c $*.c
+
+# fix : need to build unless optimization
+music.o: music.c
+	$(CC) $(CFLAGS) -O0 -o $@ -c $^
 	
 $(TARGET): $(OBJECTS)
 	$(ARCHIVING)
@@ -85,7 +89,7 @@ $(TARGET): $(OBJECTS)
 
 $(LIBRARY): $(TARGET) $(COREOBJECTS)
 	$(LINKING)
-	$(CC) -nostartfiles -O2 -mresident32 -Wl,-Map=sdl2_mixer.map $(COREOBJECTS) -o $@.db -L. -lSDL2_mixer -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2 -lm $(LIBS_EXT)
+	$(CC) -nostartfiles -mresident32 -Wl,-Map=sdl2_mixer.map $(COREOBJECTS) -o $@.db -L. -lSDL2_mixer -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2 -lm $(LIBS_EXT)
 	$(STRIPPING)
 	@ppc-morphos-strip -o $@ --remove-section=.comment $@.db
 

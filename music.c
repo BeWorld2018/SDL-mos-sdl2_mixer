@@ -390,11 +390,9 @@ void open_music(const SDL_AudioSpec *spec)
     Mix_VolumeMusic(MIX_MAX_VOLUME);
 
     /* Calculate the number of ms for each callback */
-	#ifdef __MORPHOS__
-	    ms_per_step = (int)(((Sint64)spec->samples * 1000) / spec->freq);
-	#else
-    	ms_per_step = (int) (((float)spec->samples * 1000.0) / spec->freq);
-	#endif
+	// // MORPHOS : GCC crash on it if we use optimization (ex -O2)
+    ms_per_step = (int) (((float)spec->samples * 1000.0) / spec->freq);
+
 }
 
 /* Return SDL_TRUE if the music type is available */
