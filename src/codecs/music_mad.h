@@ -18,3 +18,11 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
+
+/* This file supports playing MP3 files with libmad */
+
+#include "music.h"
+
+extern Mix_MusicInterface Mix_MusicInterface_MAD;
+
+/* vi: set ts=4 sw=4 expandtab: */

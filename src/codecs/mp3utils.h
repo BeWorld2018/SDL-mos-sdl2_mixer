@@ -18,3 +18,19 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
+
+#ifndef MIX_MP3UTILS_H
+#define MIX_MP3UTILS_H
+
+struct mp3file_t {
+    SDL_RWops *src;
+    Sint64 start, length, pos;
+};
+
+extern int  mp3_skiptags(struct mp3file_t *fil, SDL_bool keep_id3v2);
+extern size_t MP3_RWread(struct mp3file_t *fil, void *ptr, size_t size, size_t maxnum);
+extern Sint64 MP3_RWseek(struct mp3file_t *fil, Sint64 offset, int whence);
+
+#endif /* MIX_MP3UTILS_H */
+
+/* vi: set ts=4 sw=4 expandtab: */

@@ -11,6 +11,13 @@
 #define SDL2_MIXER_BASE_NAME SDL2MixerBase
 #endif /* !SDL2_MIXER_BASE_NAME */
 
+#define Mix_Linked_Version() \
+	({ \
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((const SDL_version *(*)(void))*(void**)(__base - 472))());\
+	})
+
 #define Mix_Init(__p0) \
 	({ \
 		int  __t__p0 = __p0;\
@@ -611,7 +618,7 @@
 	({ \
 		long __base = (long)(SDL2_MIXER_BASE_NAME);\
 		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
-		(((const char *(*)(void))*(void**)(__base - 454))());\
+		(((const char *(*)(void))*(void**)(__base - 448))());\
 	})
 
 #define Mix_EachSoundFont(__p0, __p1) \
@@ -620,7 +627,7 @@
 		void * __t__p1 = __p1;\
 		long __base = (long)(SDL2_MIXER_BASE_NAME);\
 		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
-		(((int (*)(int (*)(const char*, void*), void *))*(void**)(__base - 460))(__t__p0, __t__p1));\
+		(((int (*)(int (*)(const char*, void*), void *))*(void**)(__base - 454))(__t__p0, __t__p1));\
 	})
 
 #define Mix_GetChunk(__p0) \
@@ -628,7 +635,7 @@
 		int  __t__p0 = __p0;\
 		long __base = (long)(SDL2_MIXER_BASE_NAME);\
 		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
-		(((Mix_Chunk *(*)(int ))*(void**)(__base - 448))(__t__p0));\
+		(((Mix_Chunk *(*)(int ))*(void**)(__base - 460))(__t__p0));\
 	})
 
 #define Mix_CloseAudio() \
@@ -636,6 +643,109 @@
 		long __base = (long)(SDL2_MIXER_BASE_NAME);\
 		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
 		(((void (*)(void))*(void**)(__base - 466))());\
+	})
+
+#define Mix_GetMusicTitle(__p0) \
+	({ \
+		const Mix_Music * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((const char *(*)(const Mix_Music *))*(void**)(__base - 478))(__t__p0));\
+	})
+
+#define Mix_GetMusicTitleTag(__p0) \
+	({ \
+		const Mix_Music * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((const char *(*)(const Mix_Music *))*(void**)(__base - 484))(__t__p0));\
+	})
+
+#define Mix_GetMusicArtistTag(__p0) \
+	({ \
+		const Mix_Music * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((const char *(*)(const Mix_Music *))*(void**)(__base - 490))(__t__p0));\
+	})
+
+#define Mix_GetMusicAlbumTag(__p0) \
+	({ \
+		const Mix_Music * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((const char *(*)(const Mix_Music *))*(void**)(__base - 496))(__t__p0));\
+	})
+
+#define Mix_GetMusicCopyrightTag(__p0) \
+	({ \
+		const Mix_Music * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((const char *(*)(const Mix_Music *))*(void**)(__base - 502))(__t__p0));\
+	})
+
+#define Mix_GetVolumeMusicStream(__p0) \
+	({ \
+		Mix_Music * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((int (*)(Mix_Music *))*(void**)(__base - 508))(__t__p0));\
+	})
+
+#define Mix_GetMusicPosition(__p0) \
+	({ \
+		Mix_Music * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((double (*)(Mix_Music *))*(void**)(__base - 514))(__t__p0));\
+	})
+
+#define Mix_MusicDuration(__p0) \
+	({ \
+		Mix_Music * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((double (*)(Mix_Music *))*(void**)(__base - 520))(__t__p0));\
+	})
+
+#define Mix_GetMusicLoopStartTime(__p0) \
+	({ \
+		Mix_Music * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((double (*)(Mix_Music *))*(void**)(__base - 526))(__t__p0));\
+	})
+
+#define Mix_GetMusicLoopEndTime(__p0) \
+	({ \
+		Mix_Music * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((double (*)(Mix_Music *))*(void**)(__base - 532))(__t__p0));\
+	})
+
+#define Mix_GetMusicLoopLengthTime(__p0) \
+	({ \
+		Mix_Music * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((double (*)(Mix_Music *))*(void**)(__base - 538))(__t__p0));\
+	})
+
+#define Mix_SetTimidityCfg(__p0) \
+	({ \
+		const char * __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((int (*)(const char *))*(void**)(__base - 544))(__t__p0));\
+	})
+
+#define Mix_GetTimidityCfg() \
+	({ \
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((const char *(*)(void))*(void**)(__base - 550))());\
 	})
 
 #endif /* !_PPCINLINE_SDL2_MIXER_H */

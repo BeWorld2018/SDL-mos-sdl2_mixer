@@ -17,4 +17,15 @@
   2. Altered source versions must be plainly marked as such, and must not be
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
+
+  James Le Cuirot
+  chewi@aura-online.co.uk
 */
+
+/* This file supports playing MIDI files with FluidSynth */
+
+#include "music.h"
+
+extern Mix_MusicInterface Mix_MusicInterface_FLUIDSYNTH;
+
+/* vi: set ts=4 sw=4 expandtab: */

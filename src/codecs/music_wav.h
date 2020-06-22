@@ -18,3 +18,11 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
+
+/* This file supports streaming WAV files */
+
+#include "music.h"
+
+extern Mix_MusicInterface Mix_MusicInterface_WAV;
+
+/* vi: set ts=4 sw=4 expandtab: */
