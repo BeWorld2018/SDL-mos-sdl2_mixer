@@ -119,7 +119,7 @@ static int MIKMOD_Load()
             mikmod.MikMod_free = free;
         }
 #else
-#if (LIBMIKMOD_VERSION < 0x030200) || !defined(DMODE_NOISEREDUCTION)
+#if (LIBMIKMOD_VERSION < 0x030200) || (LIBMIKMOD_VERSION == 0x030200 && !defined(DMODE_NOISEREDUCTION))
         /* libmikmod 3.2.0-beta2 or older */
         mikmod.MikMod_free = free;
 #else
@@ -195,7 +195,8 @@ static int MIKMOD_Open(const SDL_AudioSpec *spec)
     if (spec->channels > 1) {
         *mikmod.md_mode |= DMODE_STEREO;
     }
-    *mikmod.md_mixfreq = spec->freq;
+   // *mikmod.md_mixfreq = spec->freq;
+	*mikmod.md_mixfreq = (spec->freq <= 65535) ? (UWORD)spec->freq : 44100;
     *mikmod.md_device  = 0;
     *mikmod.md_volume  = 96;
     *mikmod.md_musicvolume = 128;
@@ -265,7 +266,7 @@ long LMM_Tell(struct MREADER *mr)
 BOOL LMM_Read(struct MREADER *mr,void *buf,size_t sz)
 {
     LMM_MREADER* lmmmr = (LMM_MREADER*)mr;
-    return SDL_RWread(lmmmr->src, buf, sz, 1);
+    return (BOOL)SDL_RWread(lmmmr->src, buf, sz, 1);
 }
 int LMM_Get(struct MREADER *mr)
 {
@@ -371,7 +372,7 @@ static int MIKMOD_Play(void *context, int play_count)
 {
     MIKMOD_Music *music = (MIKMOD_Music *)context;
     music->play_count = play_count;
-    music->module->initvolume = music->volume;
+    music->module->initvolume = (UBYTE)music->volume;
     mikmod.Player_Start(music->module);
     return MIKMOD_Seek(music, 0.0);
 }
@@ -402,7 +403,7 @@ static int MIKMOD_GetSome(void *context, void *data, int bytes, SDL_bool *done)
     /* This never fails, and always writes a full buffer */
     mikmod.VC_WriteBytes(music->buffer, music->buffer_size);
 
-    if (SDL_AudioStreamPut(music->stream, music->buffer, music->buffer_size) < 0) {
+    if (SDL_AudioStreamPut(music->stream, music->buffer, (int)music->buffer_size) < 0) {
         return -1;
     }
 
@@ -480,7 +481,7 @@ Mix_MusicInterface Mix_MusicInterface_MIKMOD =
     MIKMOD_Stop,
     MIKMOD_Delete,
     MIKMOD_Close,
-    MIKMOD_Unload,
+    MIKMOD_Unload
 };
 
 #endif /* MUSIC_MOD_MIKMOD */
