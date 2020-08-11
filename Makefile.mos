@@ -6,7 +6,7 @@ CDEFS   =   -D__MORPHOS_SHAREDLIBS  -DHAVE_SNPRINTF -DHAVE_UNISTD_H -DHAVE_SETBU
 CC      = ppc-morphos-gcc-9 -noixemul
 LIBS_EXT = -L/usr/local/lib -lflac -lmikmod -lmpg123 -lm -lc
 
-INCLUDE = -I../SDL-mos-sdl2/include -I. -I/usr/local/include -IMorphOS/sdk
+INCLUDE =  -I/usr/local/include/SDL2 -I. -I/usr/local/include -IMorphOS/sdk
 CFLAGS  =  -mresident32 -O2 -mcpu=750 -mtune=7450 -Wno-pointer-sign -fno-strict-aliasing -Wall -ffast-math $(INCLUDE)  $(CDEFS)
 
 AR	= ppc-morphos-ar
@@ -94,10 +94,10 @@ $(LIBRARY): $(TARGET) $(COREOBJECTS)
 	@ppc-morphos-strip -o $@ --remove-section=.comment $@.db
 
 playwave: sdklibs playwave.c
-	$(CC) -O2 -Wall playwave.c -o $@ -I/usr/local/include/SDL2 -DUSE_INLINE_STDARG  -LMorphOS/devenv/lib -L/usr/local/lib -lSDL2_mixer -lSDL2
+	$(CC) -O2 -Wall playwave.c -o $@ $(INCLUDE) -DUSE_INLINE_STDARG  -LMorphOS/devenv/lib -L/usr/local/lib -lSDL2_mixer -lSDL2
 
 playmus: sdklibs playmus.c
-	$(CC) -O2 -Wall playmus.c -o $@ -I/usr/local/include/SDL2 -DUSE_INLINE_STDARG -LMorphOS/devenv/lib -L/usr/local/lib -lSDL2_mixer -lSDL2
+	$(CC) -O2 -Wall playmus.c -o $@ $(INCLUDE) -DUSE_INLINE_STDARG -LMorphOS/devenv/lib -L/usr/local/lib -lSDL2_mixer -lSDL2
 
 clean:
 	rm -f $(LIBRARY) $(TARGET) $(OBJECTS) $(COREOBJECTS) *.db *.s
