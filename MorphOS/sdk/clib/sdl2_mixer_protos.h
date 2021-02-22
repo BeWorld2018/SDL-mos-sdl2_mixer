@@ -95,7 +95,7 @@ const char* Mix_GetMusicTitleTag(const Mix_Music *music);
 const char* Mix_GetMusicArtistTag(const Mix_Music *music);
 const char* Mix_GetMusicAlbumTag(const Mix_Music *music);
 const char* Mix_GetMusicCopyrightTag(const Mix_Music *music);
-int Mix_GetVolumeMusicStream(Mix_Music *music);
+int Mix_GetMusicVolume(Mix_Music *music);
 double Mix_GetMusicPosition(Mix_Music *music);
 double Mix_MusicDuration(Mix_Music *music);
 double Mix_GetMusicLoopStartTime(Mix_Music *music);
@@ -103,6 +103,7 @@ double Mix_GetMusicLoopEndTime(Mix_Music *music);
 double Mix_GetMusicLoopLengthTime(Mix_Music *music);
 int Mix_SetTimidityCfg(const char *path);
 const char* Mix_GetTimidityCfg(void);
+int Mix_ModMusicJumpToOrder(int order);
 
 #ifdef __cplusplus
 }

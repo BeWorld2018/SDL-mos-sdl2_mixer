@@ -1,6 +1,6 @@
 # Makefile to build the SDL2_mixer library
 
-CC      = ppc-morphos-gcc-9 -noixemul 
+CC      = ppc-morphos-gcc-10 -noixemul 
 CFLAGS  =  -mcpu=750 -mtune=7450 -O2 $(INCLUDE) -Wall -Wno-pointer-sign -fno-strict-aliasing
 AR	= ppc-morphos-ar
 TARGET = libSDL2_mixer.a
@@ -50,7 +50,7 @@ lib/libb32/libSDL2_mixer-nc.a: sdl-startup-brel-nc.o ../sdk/fd/sdl2_mixer_lib.fd
 	@$(AR) crus $@ sdl-startup-brel-nc.o
 
 clean:
-	@-rm -rf lib *.s
+	@-rm -rf lib *.s *.o
 
 dump:
 	ppc-morphos-objdump --disassemble-all --reloc lib/$(TARGET).a >lib/libSDL2_mixer.s

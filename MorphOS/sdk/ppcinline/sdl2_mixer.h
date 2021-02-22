@@ -685,7 +685,7 @@
 		(((const char *(*)(const Mix_Music *))*(void**)(__base - 502))(__t__p0));\
 	})
 
-#define Mix_GetVolumeMusicStream(__p0) \
+#define Mix_GetMusicVolume(__p0) \
 	({ \
 		Mix_Music * __t__p0 = __p0;\
 		long __base = (long)(SDL2_MIXER_BASE_NAME);\
@@ -746,6 +746,14 @@
 		long __base = (long)(SDL2_MIXER_BASE_NAME);\
 		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
 		(((const char *(*)(void))*(void**)(__base - 550))());\
+	})
+
+#define Mix_ModMusicJumpToOrder(__p0) \
+	({ \
+		int  __t__p0 = __p0;\
+		long __base = (long)(SDL2_MIXER_BASE_NAME);\
+		__asm volatile("mr 12,%0": :"r"(__base):"r12");\
+		(((int (*)(int ))*(void**)(__base - 556))(__t__p0));\
 	})
 
 #endif /* !_PPCINLINE_SDL2_MIXER_H */

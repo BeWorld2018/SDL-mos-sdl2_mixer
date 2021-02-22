@@ -1,12 +1,12 @@
 # Makefile to build the SDL2_mixer library
-
-CDEFS   =   -D__MORPHOS_SHAREDLIBS  -DHAVE_SNPRINTF -DHAVE_UNISTD_H -DHAVE_SETBUF -DHAVE_FORK  \
+#  -D__SDL_DEBUG
+CDEFS   = -D__SDL_DEBUG -D__MORPHOS_SHAREDLIBS  -DHAVE_SNPRINTF -DHAVE_UNISTD_H -DHAVE_SETBUF -DHAVE_FORK  \
 	    -DMUSIC_WAV -DMUSIC_OGG -DUSE_VORBISLIB -DMUSIC_MID_TIMIDITY -DMUSIC_MOD_MIKMOD  -DMUSIC_FLAC -DMUSIC_MP3_MPG123
 
-CC      = ppc-morphos-gcc-9 -noixemul 
+CC      = ppc-morphos-gcc-10 -noixemul 
 LIBS_EXT = -L/usr/local/lib -lflac -lmikmod -lmpg123 -lm -lc
 
-INCLUDE = -I../SDL-mos-sdl2/include -I. -I/usr/local/include -IMorphOS/sdk -I./include -I./src/ -I./src/codecs
+INCLUDE = -I/usr/local/include/SDL2 -I. -I/usr/local/include -IMorphOS/sdk -I./include -I./src/ -I./src/codecs
 CFLAGS  =  -mresident32 -O2 -mcpu=750 -mtune=7450 -Wno-pointer-sign -fno-strict-aliasing -Wall -ffast-math $(INCLUDE)  $(CDEFS)
 
 AR	= ppc-morphos-ar
@@ -29,7 +29,7 @@ LIBRARY = sdl2_mixer.library
 SOURCES = \
 	src/mixer.c \
 	src/music.c \
-	src/compat.c \
+	src/utils.c \
 	src/effect_stereoreverse.c \
 	src/effects_internal.c \
 	src/effect_position.c \
@@ -48,6 +48,7 @@ SOURCES = \
 	src/codecs/music_ogg.c \
 	src/codecs/music_timidity.c \
 	src/codecs/music_wav.c \
+	src/codecs/music_xmp.c \
 	src/codecs/timidity/common.c src/codecs/timidity/instrum.c src/codecs/timidity/mix.c src/codecs/timidity/output.c \
 	src/codecs/timidity/playmidi.c src/codecs/timidity/readmidi.c src/codecs/timidity/resample.c \
 	src/codecs/timidity/tables.c src/codecs/timidity/timidity.c 
@@ -90,19 +91,19 @@ $(TARGET): $(OBJECTS)
 
 $(LIBRARY): $(TARGET) $(COREOBJECTS)
 	$(LINKING)
-	$(CC) -nostartfiles -mresident32 -Wl,-Map=sdl2_mixer.map $(COREOBJECTS) -o $@.db -L. -lSDL2_mixer -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2 $(LIBS_EXT)
+	$(CC) -nostartfiles -mresident32 -Wl,-Map=sdl2_mixer.map $(COREOBJECTS) -o $@.db -L. -lSDL2_mixer -L/usr/local/lib -lSDL2 -lm $(LIBS_EXT)
 	$(STRIPPING)
 	@ppc-morphos-strip -o $@ --remove-section=.comment $@.db
 
 playwave: sdklibs playwave.c
-	$(CC) -noixemul -O2 -Wall playwave.c -o $@ -I../SDL-mos-sdl2/include -I./include -DUSE_INLINE_STDARG  -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2_mixer -lSDL2
+	$(CC) -O2 -Wall playwave.c -o $@ $(INCLUDE) -DUSE_INLINE_STDARG  -LMorphOS/devenv/lib -L/usr/local/lib -lSDL2_mixer -lSDL2
 
 playmus: sdklibs playmus.c
-	$(CC) -noixemul -O2 -Wall playmus.c -o $@ -I../SDL-mos-sdl2/include -I./include -DUSE_INLINE_STDARG -LMorphOS/devenv/lib -L../SDL-mos-sdl2/src/core/morphos/devenv/lib -lSDL2_mixer -lSDL2
+	$(CC) -O2 -Wall playmus.c -o $@ $(INCLUDE) -DUSE_INLINE_STDARG -LMorphOS/devenv/lib -L/usr/local/lib -lSDL2_mixer -lSDL2
 
 clean:
 	rm -f $(LIBRARY) $(TARGET) $(OBJECTS) $(COREOBJECTS) *.db *.s
-	rm -f MorphOS/devenv/*.o
+	rm -rf MorphOS/devenv/*.o morphos/devenv/lib morphos/devenv/*.s
 
 dump:
 	ppc-morphos-objdump --disassemble-all --reloc $(LIBRARY).db >$(LIBRARY).s

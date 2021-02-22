@@ -109,7 +109,7 @@
 	STUB(Mix_GetMusicArtistTag)
 	STUB(Mix_GetMusicAlbumTag)
 	STUB(Mix_GetMusicCopyrightTag)
-	STUB(Mix_GetVolumeMusicStream)
+	STUB(Mix_GetMusicVolume)
 	STUB(Mix_GetMusicPosition)
 	STUB(Mix_MusicDuration)
 	STUB(Mix_GetMusicLoopStartTime)
@@ -117,4 +117,5 @@
 	STUB(Mix_GetMusicLoopLengthTime)
 	STUB(Mix_SetTimidityCfg)
 	STUB(Mix_GetTimidityCfg)
+	STUB(Mix_ModMusicJumpToOrder)
 	
